@@ -1,6 +1,8 @@
-from engine.Object import Object, Collideable
+from engine.Object import Collideable
 from engine.Actuator import Actuator, Activated
-from game.Utils import toPygameY
+from engine.Percent import Percent
+
+from game.Utils import toPygameY, calcPercent
 from game.Player import Player
 from game.Image import Image
 
@@ -11,23 +13,35 @@ class RectangleCollider(Collideable, Activated):
     image: Image|None = None
     drawSurface: Surface
 
-    def __init__(self, x: int, y: int, w: int, h: int, priority: int, hardColliding:bool, texture: Color|str|None, surface: Surface) -> None:
-        self.x = x
-        self.y = y
-        self.width = w
-        self.height = h
+    def __init__(self, x: int|Percent, y: int|Percent, width: int|Percent, height: int|Percent, priority: int, hardColliding:bool, texture: Color|str|None, drawSurface: Surface) -> None:
+        drawSurfaceWidth: int = drawSurface.get_width()
+        drawSurfaceHeight: int = drawSurface.get_width()
+
+        self.width = calcPercent(width, drawSurfaceWidth, drawSurfaceWidth)
+        self.height = calcPercent(height, drawSurfaceHeight, drawSurfaceHeight)
+
+        self.x = calcPercent(x, drawSurfaceWidth // 2 - self.width // 2, drawSurfaceWidth)
+        self.y = calcPercent(y, drawSurfaceHeight // 2 - self.height // 2, drawSurfaceHeight)
+
         self.priority = priority
         self.hardColliding = hardColliding
+
         if texture == None or isinstance(texture, Color):
             self.color = texture
         else:
-            self.image = Image(x,y,w,h,texture,surface)
-        self.drawSurface = surface
+            self.image = Image(
+                self.x,
+                self.y,
+                self.width,
+                self.height,
+                texture,
+                drawSurface
+            )
+        self.drawSurface = drawSurface
     
     def show(self):
         toDisplay: Surface = Surface((self.width, self.height), SRCALPHA)
         if self.color != None:
-            if self.color.a == 0: return # rien a afficher vu que c'est totalement transparent
             toDisplay.fill(self.color)
             self.drawSurface.blit(
                 toDisplay,

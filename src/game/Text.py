@@ -1,30 +1,58 @@
 from engine.Object import Object
-from game.Utils import toPygameY
+from engine.Percent import Percent
+
+from game.Utils import toPygameY, calcPercent
 
 from pygame import Surface, transform, Color, SRCALPHA
-from pygame.font import Font, get_default_font
+from pygame.font import Font
 
 class Text(Object):
-    def setPosition(self, x:int, y:int):
-        self.x = x
-        self.y = y
+    text: str
+    fontFile: str|None
+    fontSize: int
+    color: Color
+    backgroundColor: Color|None
+    drawSurface: Surface
+    drawSurfaceWidth: int
+    drawSurfaceHeight: int
+
+    def __init__(self, x:int|Percent, y:int|Percent, width:int|Percent, height:int|Percent, text:str, fontFile:str|None, fontSize:int, color: Color, backgroundColor: Color|None, drawSurface: Surface) -> None:
+        self.drawSurfaceWidth = drawSurfaceWidth = drawSurface.get_width()
+        self.drawSurfaceHeight = drawSurfaceHeight = drawSurface.get_height()
+
+        self.width = calcPercent(width, drawSurfaceWidth, drawSurfaceWidth)
+        self.height = calcPercent(height, drawSurfaceHeight, drawSurfaceHeight)
+
+        self.x = calcPercent(x, drawSurfaceWidth // 2 - self.width // 2, drawSurfaceWidth)
+        self.y = calcPercent(y, drawSurfaceHeight // 2 - self.height // 2, drawSurfaceHeight)
+
+        self.text = text
+        self.fontFile = fontFile
+        self.fontSize = fontSize
+        self.color = color
+        self.backgroundColor = backgroundColor
+        self.drawSurface = drawSurface
+
+    def setPosition(self, x:int|Percent, y:int|Percent):
+        self.x = calcPercent(x, self.drawSurfaceWidth // 2 - self.width // 2, self.drawSurfaceWidth)
+        self.y = calcPercent(y, self.drawSurfaceHeight // 2 - self.height // 2, self.drawSurfaceHeight)
     
-    def setSize(self, width:int, height:int):
-        self.width = width
-        self.height = height
+    def setSize(self, width:int|Percent, height:int|Percent):
+        self.width = calcPercent(width, self.drawSurfaceWidth, self.drawSurfaceWidth)
+        self.height = calcPercent(height, self.drawSurfaceHeight, self.drawSurfaceHeight)
 
 class StaticText(Text):
     toDisplay: Surface
     drawSurface: Surface
 
-    def __init__(self, text:str, fontFile: str|None, font_size: int, color: Color, backgroundColor: Color|None, x:int, y:int, width:int, height:int, drawSurface: Surface) -> None:
-        self.x = x
-        self.y = y
-
-        font = Font(fontFile, font_size)
+    def __init__(self, x:int|Percent, y:int|Percent, width:int|Percent, height:int|Percent, text:str, fontFile: str|None, fontSize: int, color: Color, backgroundColor: Color|None, drawSurface: Surface) -> None:
+        super().__init__(x,y,width,height,text,fontFile,fontSize,color,backgroundColor,drawSurface)
+        
+        font = Font(fontFile, fontSize)
         optimizedTextSize = font.size(text)
-        self.width = width if width != 0 else optimizedTextSize[0]
-        self.height = height if height != 0 else optimizedTextSize[1]
+
+        self.width = self.width if self.width != 0 else optimizedTextSize[0]
+        self.height = self.height if self.height != 0 else optimizedTextSize[1]
 
         toDisplay = font.render(text if text != "" else " ", True, color)
 
@@ -42,31 +70,13 @@ class StaticText(Text):
             transform.scale(self.toDisplay, (self.width, self.height)),
             (
                 self.x,
-                toPygameY(self.y, self.height, self.drawSurface.get_height())
+                toPygameY(self.y, self.height, self.drawSurfaceHeight)
             )
         )
 
 class DynamicText(Text):
-    text: str
-    fontFile: str|None
-    fontSize: int
-    color: Color
-    backgroundColor: Color|None
-    drawSurface: Surface
-
-    def __init__(self, text:str, fontFile: str|None, fontSize: int, color:Color, backgroundColor:Color|None, x:int, y:int, width:int, height:int, drawSurface:Surface) -> None:
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
-
-        self.text = text
-        self.fontFile = fontFile
-        self.fontSize = fontSize
-        self.color = color
-        self.backgroundColor = backgroundColor
-
-        self.drawSurface = drawSurface
+    def __init__(self, x:int|Percent, y:int|Percent, width:int|Percent, height:int|Percent, text:str, fontFile: str|None, fontSize: int, color:Color, backgroundColor:Color|None, drawSurface:Surface) -> None:
+        super().__init__(x,y,width,height,text,fontFile,fontSize,color,backgroundColor,drawSurface)
     
     def show(self):
         width: int = self.width
@@ -87,11 +97,11 @@ class DynamicText(Text):
         self.drawSurface.blit(
             transform.scale(toDisplay, (width, height)),
             (
-                self.x if self.x != -1 else self.drawSurface.get_width() // 2 - width // 2,
+                self.x,
                 toPygameY(
-                    self.y if self.y != -1 else self.drawSurface.get_height() // 2 - height // 2,
+                    self.y,
                     height,
-                    self.drawSurface.get_height()
+                    self.drawSurfaceHeight
                 )
             )
         )

@@ -62,10 +62,10 @@ class Main:
         game = game if game != None else Game()
         colliders:list[Collideable] = []
 
-        rectangleCollidersInfo: list[ tuple[int,int,int,int,int,bool,Color|None] ] = [
+        rectangleCollidersInfo: list[ tuple[int|Percent,int|Percent,int|Percent,int|Percent,int,bool,Color|None] ] = [
             (0,200,FRAME_WIDTH//2 - 100,50,51,True,Color(0,255,0)), # sol principal
             (FRAME_WIDTH // 2 - 100, 180, FRAME_WIDTH // 2 + 100, 50, 51, True, Color(0,255,0)), # plateforme basse
-            (FRAME_WIDTH // 2, 280, FRAME_WIDTH // 4, 50, 51, True, Color(50, 230, 65)), # plateforme haut
+            (Percent(50), 280, FRAME_WIDTH // 4, 50, 51, True, Color(50, 230, 65)), # plateforme haut
             (0, 0, 0, FRAME_HEIGHT, 100, True, None), # mur écran gauche
             (FRAME_WIDTH, 0, 0, FRAME_HEIGHT, 100, True, None) # mur écran droit
         ]
@@ -96,15 +96,15 @@ class Main:
         textSize = defaultFont32.size(text)
 
         testText: DynamicText = DynamicText(
+            0,
+            500,
+            textSize[0],
+            textSize[1],
             text,
             None,
             32,
             Color(0,0,0),
             None,
-            0,
-            500,
-            textSize[0],
-            textSize[1],
             game.getScreen()
         )
 
@@ -112,15 +112,15 @@ class Main:
         self.testText = testText
 
         endText: DynamicText = DynamicText(
+            -1,
+            -1,
+            400,
+            400,
             "",
             None,
             32,
             Color(0,0,0),
             None,
-            FRAME_WIDTH // 2 - 200,
-            FRAME_HEIGHT // 2 - 200,
-            400,
-            400,
             game.getScreen()
         )
 
@@ -239,7 +239,7 @@ def stopGame(btn: TextButton):
 gameScreen = game.getScreen()
 objs: list[Object] = [
     Rectangle(-1,0,Percent(50),-1, Color(255,0,255), gameScreen),
-    StaticText("Reumarckable",None,32,Color(255,0,0),None,0,0,0,0,gameScreen),
+    StaticText(0,0,0,0,"Reumarckable",None,32,Color(255,0,0),None,gameScreen),
     TextButton(-1,-1,300,80, "Jouer", None, 100, Color(0,255,0), Color(255,0,0), gameScreen, startGame),
     TextButton(-1, 100, 300, 80, "Quitter", None, 100, Color(0,255,0), Color(255,0,0), gameScreen, stopGame),
 ]

@@ -4,8 +4,10 @@ from pygame import Surface, Color, SRCALPHA
 from typing import Callable
 
 from engine.Object import Button
-from game.Text import DynamicText
-from game.Utils import toPygameY
+from engine.Percent import Percent
+
+from game.Text import StaticText
+from game.Utils import toPygameY, calcPercent
 
 class TextButton(Button):
     text: str
@@ -16,13 +18,17 @@ class TextButton(Button):
     drawSurface: Surface
     clickFunction: Callable[[TextButton], None]|None
 
-    def __init__(self, x:int, y:int, width:int, height:int, text:str, fontFile:str|None, fontSize:int, textColor: Color|None, backgroundColor: Color|None, drawSurface:Surface, clickFunction: Callable[[TextButton],None]|None = None) -> None:
-        super().__init__(
-            x if x != -1 else drawSurface.get_width() // 2 - width // 2,
-            y if y != -1 else drawSurface.get_height() // 2 - height // 2,
-            width,
-            height
-        )
+    def __init__(self, x:int|Percent, y:int|Percent, width:int|Percent, height:int|Percent, text:str, fontFile:str|None, fontSize:int, textColor: Color|None, backgroundColor: Color|None, drawSurface:Surface, clickFunction: Callable[[TextButton],None]|None = None) -> None:
+        drawSurfaceWidth: int = drawSurface.get_width()
+        drawSurfaceHeight: int = drawSurface.get_height()
+
+        width = calcPercent(width, drawSurfaceWidth, drawSurfaceWidth)
+        height = calcPercent(height, drawSurfaceHeight, drawSurfaceHeight)
+        x = calcPercent(x, drawSurfaceWidth // 2 - width // 2, drawSurfaceWidth)
+        y = calcPercent(y, drawSurfaceHeight // 2 - height // 2, drawSurfaceHeight)
+
+        super().__init__(x, y, width, height)
+        
         self.text = text
         self.fontFile = fontFile
         self.fontSize = fontSize
@@ -68,16 +74,16 @@ class TextButton(Button):
         buttonSurface = Surface((self.width, self.height), SRCALPHA)
         buttonSurface.fill(self.backgroundColor if self.backgroundColor != None else Color(0,0,0,0))
 
-        text: DynamicText = DynamicText(
+        text: StaticText = StaticText(
+            -1,
+            -1,
+            -1,
+            -1,
             self.text,
             self.fontFile,
             self.fontSize,
             self.textColor,
             None,
-            -1,
-            -1,
-            0,
-            0,
             buttonSurface
         )
         text.show()
