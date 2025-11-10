@@ -1,5 +1,7 @@
 from sys import path
 
+from engine.Percent import Percent
+
 # Constantes
 EXEC_DIRECTORY: str = path[0] + "/"
 IMAGE_DIRECTORY: str = EXEC_DIRECTORY + "../images/"
@@ -14,3 +16,11 @@ FRAME_HEIGHT: int = 720
 def toPygameY(y:int, height:int, surfaceHeight:int) -> int:
     """Transforme une coordonnée y pour laquel y=0 équivaut à ce que l'on soit en bas de la surface en coordonnée telle que y=0 équivaut à ce que l'on soit en haut de la surface"""
     return surfaceHeight - y - height
+
+def calcPercent(val:int|Percent, value_neg: int, percent_of: int) -> int:
+        res: int
+        if isinstance(val, int):
+            res = val if -1 < val else value_neg
+        else:
+            res = int(percent_of * val)
+        return res

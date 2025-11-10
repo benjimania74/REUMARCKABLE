@@ -13,7 +13,7 @@ from game.Text import DynamicText, StaticText
 from game.Utils import FRAME_WIDTH, FRAME_HEIGHT
 from game.Menu import Menu
 from game.Button import TextButton
-from game.Utils import toPygameY
+from game.Utils import toPygameY, calcPercent
 
 class Rectangle(Object):
     toDraw: Surface
@@ -23,24 +23,16 @@ class Rectangle(Object):
         drawSurfaceWidth: int = drawSurface.get_width()
         drawSurfaceHeight: int = drawSurface.get_height()
 
-        self.width = self.calc_percent(width, drawSurfaceWidth, drawSurfaceWidth)
-        self.height = self.calc_percent(height, drawSurfaceHeight, drawSurfaceHeight)
+        self.width = calcPercent(width, drawSurfaceWidth, drawSurfaceWidth)
+        self.height = calcPercent(height, drawSurfaceHeight, drawSurfaceHeight)
 
-        self.x = self.calc_percent(x, drawSurfaceWidth // 2 - self.width // 2, drawSurfaceWidth)
-        self.y = self.calc_percent(y, drawSurfaceHeight // 2 - self.height // 2, drawSurfaceHeight)
+        self.x = calcPercent(x, drawSurfaceWidth // 2 - self.width // 2, drawSurfaceWidth)
+        self.y = calcPercent(y, drawSurfaceHeight // 2 - self.height // 2, drawSurfaceHeight)
 
         self.drawSurface = drawSurface
 
         self.toDraw = Surface((self.width, self.height), flags=SRCALPHA)
         self.toDraw.fill(color)
-    
-    def calc_percent(self, val:int|Percent, value_neg: int, percent_of: int) -> int:
-        res: int
-        if isinstance(val, int):
-            res = val if -1 < val else value_neg
-        else:
-            res = int(percent_of * val)
-        return res
 
     def show(self):
         self.drawSurface.blit(
