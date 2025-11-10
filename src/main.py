@@ -2,7 +2,7 @@ import pygame
 from pygame import Color, Surface, SRCALPHA
 
 from engine.Object import Collideable, Object
-from engine.Actuator import Actuator, Activated
+from engine.Percent import Percent
 
 from game.Game import Game
 from game.Colliders import RectangleCollider, PlayerDetectorCollider, ActuatorCollider
@@ -12,13 +12,8 @@ from game.Image import Image
 from game.Text import DynamicText, StaticText
 from game.Utils import FRAME_WIDTH, FRAME_HEIGHT
 from game.Menu import Menu
-from game.Button import Button, TextButton
+from game.Button import TextButton
 from game.Utils import toPygameY
-
-class Percent:
-    value: float
-    def __init__(self, value: float) -> None:
-        self.value = value
 
 class Rectangle(Object):
     toDraw: Surface
@@ -44,7 +39,7 @@ class Rectangle(Object):
         if isinstance(val, int):
             res = val if -1 < val else value_neg
         else:
-            res = int(percent_of * val.value / 100)
+            res = int(percent_of * val)
         return res
 
     def show(self):
