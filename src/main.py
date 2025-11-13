@@ -77,7 +77,7 @@ class Main:
         colliders.append(p)
         colliders.append(phantom)
 
-        end: PlayerDetectorCollider = PlayerDetectorCollider(1000, 320, 50, 50, 51, True, Color(0,255,0), game.getScreen(), p)
+        end: PlayerDetectorCollider = PlayerDetectorCollider(1000, 320, 50, 50, 51, True, Color(0,255,0), p, game.getScreen())
         colliders.append(end)
         self.end = end
 
