@@ -56,7 +56,7 @@ class RectangleCollider(Collideable, Activated):
 class PlayerDetectorCollider(RectangleCollider):
     player: Player
     
-    def __init__(self, x: int, y: int, w: int, h: int, priority: int, hardColliding: bool, texture: Color|str, surface: Surface, player: Player) -> None:
+    def __init__(self, x: int, y: int, w: int, h: int, priority: int, hardColliding: bool, texture: Color|str, player: Player, surface: Surface) -> None:
         self.player = player
         super().__init__(x, y, w, h, priority, hardColliding, texture, surface)
     
