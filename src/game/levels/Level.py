@@ -58,10 +58,7 @@ def loadLevelFromModule(module, mainMenu: Menu, game: Game) -> Level|None:
         if level_class_name != None: # on connait la classe du niveau
             level_class = getattr(module, level_class_name) # on récupère la classe du niveau
             if issubclass(level_class, Level): # si on a bien à faire à un niveau
-                print("a")
-                
                 level = level_class( mainMenu, game )  # les niveaux, dans leurs fichiers, utilise un autre constructeur, mais Python ne nous laisse pas en faire plusieurs :(
-                print("test")
                 level.load()
                 res = level
     except:
