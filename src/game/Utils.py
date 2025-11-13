@@ -4,7 +4,7 @@ from engine.Percent import Percent
 
 # Constantes
 EXEC_DIRECTORY: str = path[0] + "/"
-IMAGE_DIRECTORY: str = EXEC_DIRECTORY + "../images/"
+IMAGE_DIRECTORY: str = EXEC_DIRECTORY + "game/assets/images/"
 NO_TEXTURE: str = "no_texture.png"
 ICON: str = "icon.png"
 
