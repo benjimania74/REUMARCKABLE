@@ -26,7 +26,7 @@ class Player(Entity):
 
     isActive: bool = True
 
-    def __init__(self, x: int|Percent, y: int|Percent, width: int|Percent, height: int|Percent, collideableList: list[Collideable], texture: Color|str, drawSurface: Surface) -> None:
+    def __init__(self, x: int|Percent, y: int|Percent, width: int|Percent, height: int|Percent, texture: Color|str, collideableList: list[Collideable], drawSurface: Surface) -> None:
         drawSurfaceWidth: int = drawSurface.get_width()
         drawSurfaceHeight: int = drawSurface.get_height()
         
@@ -42,7 +42,6 @@ class Player(Entity):
         self.priority = 50
         self.hardColliding = True
 
-        self.collideableList = collideableList
 
         if isinstance(texture, Color):
             self.color = texture
@@ -55,6 +54,7 @@ class Player(Entity):
                 texture,
                 drawSurface
             )
+        self.collideableList = collideableList
         self.drawSurface = drawSurface
     
     def spawn(self):

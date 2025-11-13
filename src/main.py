@@ -72,8 +72,8 @@ class Main:
         for rci in rectangleCollidersInfo:
             colliders.append( RectangleCollider(*rci, game.getScreen()) )
 
-        p: Player = Player(0,400, 50, 50, colliders, "background.jpg", game.getScreen())
-        phantom: PhantomPlayer = PhantomPlayer(0, 350, 50, 50, colliders, Color(0,0,255), game.getScreen())
+        p: Player = Player(0,400, 50, 50, "background.jpg", colliders, game.getScreen())
+        phantom: PhantomPlayer = PhantomPlayer(0, 350, 50, 50, Color(0,0,255), colliders, game.getScreen())
         colliders.append(p)
         colliders.append(phantom)
 
