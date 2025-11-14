@@ -14,8 +14,8 @@ class Level(ABC):
     game: Game
     mainMenu: Menu
 
-    def __init__(self, name: str, mainMenu: Menu, game: Game) -> None:
-        self.name = name
+    def __init__(self, mainMenu: Menu, game: Game) -> None:
+        self.name = self.__class__.__qualname__
         self.game = game
         self.mainMenu = mainMenu
 
@@ -58,7 +58,7 @@ def loadLevelFromModule(module, mainMenu: Menu, game: Game) -> Level|None:
         if level_class_name != None: # on connait la classe du niveau
             level_class = getattr(module, level_class_name) # on récupère la classe du niveau
             if issubclass(level_class, Level): # si on a bien à faire à un niveau
-                level = level_class( mainMenu, game )  # les niveaux, dans leurs fichiers, utilise un autre constructeur, mais Python ne nous laisse pas en faire plusieurs :(
+                level = level_class( mainMenu, game )  # on instancie le niveau
                 level.load()
                 res = level
     except:

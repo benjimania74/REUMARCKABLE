@@ -17,10 +17,11 @@ class Tutorial(Level):
     menu: Menu|None
 
     def __init__(self, mainMenu: Menu, game: Game) -> None:
-        super().__init__("Tutoriel", mainMenu, game)
-        self.menu = None
-
+        super().__init__(mainMenu, game)
+        self.name = "Tutoriel" # override du nom par défaut
+        
     def load(self) -> None:
+        self.menu = None
         game: Game = self.game
         colliders:list[Collideable] = []
 
@@ -45,33 +46,6 @@ class Tutorial(Level):
 
         toDisplay: list[Object] = []
         toDisplay += colliders
-
-        testImage: Image = Image(0,0,50,50,"background.jpg",game.getScreen())
-        toDisplay.append(testImage)
-
-        defaultFont32 = pygame.font.Font(
-            pygame.font.get_default_font(),
-            32
-        )
-
-        text = "V"
-        textSize = defaultFont32.size(text)
-
-        testText: DynamicText = DynamicText(
-            0,
-            500,
-            textSize[0],
-            textSize[1],
-            text,
-            None,
-            32,
-            Color(0,0,0),
-            None,
-            game.getScreen()
-        )
-
-        toDisplay.append(testText)
-        self.testText = testText
 
         endText: DynamicText = DynamicText(
             -1,
@@ -118,9 +92,6 @@ class Tutorial(Level):
         p: Player = self.p
         phantom: PhantomPlayer = self.phantom
         actuators: list[ActuatorCollider] = self.actuators
-        end: PlayerDetectorCollider = self.end
-        endText: DynamicText = self.endText
-        testText: DynamicText = self.testText
 
         keyPressedMap = pygame.key.get_pressed()
 
@@ -158,8 +129,6 @@ class Tutorial(Level):
                         self.menu = menu
             if event.type == pygame.MOUSEBUTTONDOWN and self.menu != None:
                 self.menu.handleClick(event, self.game)
-
-        testText.setBackgroundColor(None if phantom.canSetActive() or phantom.isActive else Color(0,0,0,140))
 
         if self.menu == None:
             if keyPressedMap[pygame.K_d]:
