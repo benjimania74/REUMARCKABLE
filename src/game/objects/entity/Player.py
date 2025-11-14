@@ -128,6 +128,11 @@ class Player(Entity):
             self.image.show()
         return
     
+    def showAt(self, x: int|Percent, y: int|Percent):
+        x = calcPercent(x, self.drawSurface.get_width() // 2 - self.width // 2, self.drawSurface.get_width())
+        y = calcPercent(y, self.drawSurface.get_height() // 2 - self.height // 2, self.drawSurface.get_height())
+        return super().showAt(x, y)
+
     def evaluateMovement(self, xMove: int, yMove: int) -> tuple[int,int]:
         """Renvoi le mouvement possible sans entrer en collision frontale"""
         collide: bool = False
