@@ -3,10 +3,9 @@ from pygame import Surface, Color, SRCALPHA
 
 from typing import Callable
 
-from engine.Object import Button
-from engine.Percent import Percent
+from engine import *
 
-from game.Text import StaticText
+from game.objects.text.Text import StaticText
 from game.Utils import toPygameY, calcPercent
 
 class TextButton(Button):

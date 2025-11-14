@@ -1,7 +1,6 @@
 from pygame import image, Surface, transform
 
-from engine.Object import Object
-from engine.Percent import Percent
+from engine import *
 
 from game.Utils import IMAGE_DIRECTORY, NO_TEXTURE, toPygameY, calcPercent
 

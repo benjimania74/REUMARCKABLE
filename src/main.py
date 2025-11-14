@@ -1,20 +1,13 @@
-import pygame
 from pygame import Color, Surface, SRCALPHA
 
-from engine.Object import Collideable, Object
+from engine.Object import Object
 from engine.Percent import Percent
 
 from game.Game import Game
-from game.Colliders import RectangleCollider, PlayerDetectorCollider, ActuatorCollider
-from game.Player import Player
-from game.PhantomPlayer import PhantomPlayer
-from game.Image import Image
-from game.Text import DynamicText, StaticText
-from game.Utils import FRAME_WIDTH, FRAME_HEIGHT
 from game.Menu import Menu
-from game.Button import TextButton
-from game.Utils import toPygameY, calcPercent
+from game.Utils import toPygameY, calcPercent, FRAME_WIDTH, FRAME_HEIGHT
 from game.levels.Level import loadLevel
+from game.objects import *
 
 class Rectangle(Object):
     toDraw: Surface

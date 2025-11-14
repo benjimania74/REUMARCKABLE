@@ -1,4 +1,4 @@
-from game.Player import Player
+from .Player import Player
 
 class PhantomPlayer(Player):
     isActive: bool = False

@@ -1,10 +1,8 @@
-from engine.Object import Collideable
-from engine.Actuator import Actuator, Activated
-from engine.Percent import Percent
+from engine import *
 
 from game.Utils import toPygameY, calcPercent
-from game.Player import Player
-from game.Image import Image
+from ..image import Image
+from ..entity import Player
 
 from pygame import Surface, Color, SRCALPHA
 

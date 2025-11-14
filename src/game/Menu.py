@@ -1,7 +1,7 @@
 import pygame
 from pygame.event import Event
 
-from engine.Object import Object,Clickable
+from engine import Object,Clickable
 
 from game.Game import Game
 from game.Utils import toPygameY

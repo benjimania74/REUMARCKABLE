@@ -9,7 +9,7 @@ from typing import Callable
 from threading import Thread
 
 from game.Utils import FRAME_NAME, FRAME_WIDTH, FRAME_HEIGHT, ICON
-from game.Image import getImage
+from game.objects.image.Image import getImage
 
 class Game:
     screen: Surface|None = None

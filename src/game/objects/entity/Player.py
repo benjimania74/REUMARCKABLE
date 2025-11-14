@@ -1,12 +1,10 @@
 from math import floor, ceil
 
-from engine.Object import Collideable
-from engine.Entity import Entity
-from engine.Percent import Percent
+from engine import *
 
 from game.Utils import toPygameY, calcPercent
 
-from game.Image import Image
+from ..image import *
 
 from pygame import Surface, Color, SRCALPHA
 

@@ -1,14 +1,12 @@
 import pygame
+from pygame import Color
 from typing import Any
 
 from game.Game import Game
 from game.levels.Level import Level
 from game.Utils import Percent, FRAME_WIDTH, FRAME_HEIGHT
-from game.Colliders import *
-from game.PhantomPlayer import *
-from game.Text import *
 from game.Menu import *
-from game.Button import *
+from game.objects import *
 
 from engine.Object import *
 

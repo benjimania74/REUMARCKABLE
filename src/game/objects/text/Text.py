@@ -1,5 +1,4 @@
-from engine.Object import Object
-from engine.Percent import Percent
+from engine import *
 
 from game.Utils import toPygameY, calcPercent
 
