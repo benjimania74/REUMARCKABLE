@@ -59,8 +59,8 @@ gameScreen = game.getScreen()
 objs: list[Object] = [
     Rectangle(-1,0,Percent(50),-1, Color(255,0,255), gameScreen),
     StaticText(0,0,0,0,"Reumarckable",None,32,Color(255,0,0),None,gameScreen),
-    TextButton(-1,-1,300,80, "Jouer", None, 100, Color(0,255,0), Color(255,0,0), gameScreen, startGame),
-    TextButton(-1, 100, 300, 80, "Quitter", None, 100, Color(0,255,0), Color(255,0,0), gameScreen, stopGame),
+    TextButton(-1,-1,300,80, "Jouer", None, 100, Color(0,255,0), Color(255,0,0), startGame, gameScreen),
+    TextButton(-1, 100, 300, 80, "Quitter", None, 100, Color(0,255,0), Color(255,0,0), stopGame, gameScreen),
 ]
 mainMenu.add(*objs)
 game.setToRun(mainMenu.run)

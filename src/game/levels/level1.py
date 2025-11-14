@@ -123,8 +123,8 @@ class Tutorial(Level):
                         menu = Menu()
                         menu.add(
                             #Rectangle(0,0, FRAME_WIDTH, FRAME_HEIGHT, Color(0,0,255, 25), game.getScreen()),
-                            TextButton(-1,-1,200,100, "Continuer", None, 32,None, Color(0,255,0), self.game.getScreen(), self.closeMenu),
-                            TextButton(-1, 100, 200, 100, "Quitter", None, 32, None, Color(0,255,0), self.game.getScreen(), self.quit)
+                            TextButton(-1,-1,200,100, "Continuer", None, 32,None, Color(0,255,0), self.closeMenu, self.game.getScreen()),
+                            TextButton(-1, 100, 200, 100, "Quitter", None, 32, None, Color(0,255,0), self.quit, self.game.getScreen())
                         )
                         self.menu = menu
             if event.type == pygame.MOUSEBUTTONDOWN and self.menu != None:

@@ -18,7 +18,7 @@ class TextButton(Button):
     drawSurface: Surface
     clickFunction: Callable[[TextButton], None]|None
 
-    def __init__(self, x:int|Percent, y:int|Percent, width:int|Percent, height:int|Percent, text:str, fontFile:str|None, fontSize:int, textColor: Color|None, backgroundColor: Color|None, drawSurface:Surface, clickFunction: Callable[[TextButton],None]|None = None) -> None:
+    def __init__(self, x:int|Percent, y:int|Percent, width:int|Percent, height:int|Percent, text:str, fontFile:str|None, fontSize:int, textColor: Color|None, backgroundColor: Color|None, clickFunction: Callable[[TextButton],None]|None, drawSurface:Surface) -> None:
         drawSurfaceWidth: int = drawSurface.get_width()
         drawSurfaceHeight: int = drawSurface.get_height()
 
