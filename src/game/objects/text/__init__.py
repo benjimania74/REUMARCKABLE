@@ -1,1 +1,2 @@
-from .Text import *
+from .StaticText import *
+from .DynamicText import *
