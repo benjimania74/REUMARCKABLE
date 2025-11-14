@@ -1,7 +1,7 @@
 from typing import Any
 
 class Activated:
-    def onActuated(self, data:dict[str,Any]) -> None:
+    def onActuated(self, data:dict[str,Any]|None = None) -> None:
         pass
 
 class Actuator:
