@@ -14,8 +14,8 @@ class Level(ABC):
     game: Game
     mainMenu: Menu
 
-    def __init__(self, mainMenu: Menu, game: Game) -> None:
-        self.name = self.__class__.__qualname__
+    def __init__(self, mainMenu: Menu, game: Game, name: str|None = None) -> None:
+        self.name = self.__class__.__qualname__ if name == None else name
         self.game = game
         self.mainMenu = mainMenu
 
@@ -36,8 +36,6 @@ class Level(ABC):
         self.update()
         self.show()
     
-
-
 def loadLevel(id:int, mainMenu: Menu, game: Game) -> Level|None:
     res: Level|None = None
     if isfile(LEVEL_DIRECTORY + "level" + str(id) + ".py"):
