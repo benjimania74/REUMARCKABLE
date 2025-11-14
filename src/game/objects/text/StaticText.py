@@ -3,7 +3,7 @@ from .Text import *
 from pygame import transform
 from pygame.font import Font
 
-from Utils import toPygameY
+from game.Utils import toPygameY
 
 class StaticText(Text):
     toDisplay: Surface

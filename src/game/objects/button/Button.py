@@ -5,7 +5,7 @@ from typing import Callable
 
 from engine import *
 
-from game.objects.text.Text import StaticText
+from game.objects.text import StaticText
 from game.Utils import toPygameY, calcPercent
 
 class TextButton(Button):

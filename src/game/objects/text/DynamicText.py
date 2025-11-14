@@ -3,7 +3,7 @@ from .Text import *
 from pygame import transform
 from pygame.font import Font
 
-from Utils import toPygameY
+from game.Utils import toPygameY
 
 class DynamicText(Text):
     def __init__(self, x:int|Percent, y:int|Percent, width:int|Percent, height:int|Percent, text:str, fontFile: str|None, fontSize: int, color:Color, backgroundColor:Color|None, drawSurface:Surface) -> None:
