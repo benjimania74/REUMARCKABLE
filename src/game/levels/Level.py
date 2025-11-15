@@ -1,4 +1,5 @@
 from __future__ import annotations
+from typing import Any
 
 import pygame
 
@@ -13,7 +14,7 @@ from os import listdir
 from os.path import isfile
 from importlib import import_module
 
-class Level(ABC):
+class Level(ABC, Activated):
     name: str
 
     player: Player
@@ -41,6 +42,13 @@ class Level(ABC):
     def load(self) -> None:
         """Permet de charger le niveau."""
         pass
+
+    def reload(self) -> None:
+        """Permet de recharger le niveau."""
+        self.colliders = []
+        self.content = []
+        self.actuators = []
+        self.load()
 
     def update(self) -> None:
         """Permet de mettre à jour chacun des objets contenues dans le niveau"""
@@ -84,6 +92,19 @@ class Level(ABC):
     def quitLevel(self, btn: TextButton|None = None):
         """Quitte le niveau"""
         self.game.setToRun(self.mainMenu.run)
+
+    def restart(self, btn: TextButton|None = None):
+        """Redémarre le niveau"""
+        self.reload()
+    
+    def onActuated(self, data: dict[str, Any] | None = None) -> None:
+        if data != None and data.get("type", None) == EndGamePlayerDetectorCollider.__qualname__:
+            endMenu: Menu = Menu()
+            endMenu.add(
+                TextButton(-1, Percent(52), Percent(80), Percent(28), "Recommencer", None, 1000, None, Color(205,205,10), self.restart, self.game.getScreen()),
+                TextButton(-1, Percent(20), Percent(80), Percent(28), "Quitter", None, 1000, None, Color(205,205,10), self.quitLevel, self.game.getScreen())
+            )
+            self.setMenu(endMenu)
 
     def handleKeys(self):
         """Gère les touches pressées"""

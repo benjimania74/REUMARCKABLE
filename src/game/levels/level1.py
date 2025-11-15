@@ -36,21 +36,7 @@ class Tutorial(Level):
         colliders.append(p)
         colliders.append(phantom)
 
-        endText: ActuateText = ActuateText(
-            -1,
-            -1,
-            400,
-            400,
-            "",
-            "Bravo !",
-            None,
-            32,
-            Color(0,0,0),
-            None,
-            game.getScreen()
-        )
-
-        end: PlayerDetectorCollider = PlayerDetectorCollider(1000, 320, 50, 10, 51, True, endText, Color(0,255,0), p, game.getScreen())
+        end: EndGamePlayerDetectorCollider = EndGamePlayerDetectorCollider(1000, 320, 50, 10, 51, True, self, Color(0,255,0), p, game.getScreen())
         colliders.append(end)
         self.end = end
 
@@ -61,7 +47,6 @@ class Tutorial(Level):
         )
 
         toDisplay += actuators
-        toDisplay.append(endText)
 
         self.player = p
         self.phantom = phantom

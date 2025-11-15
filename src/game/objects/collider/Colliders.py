@@ -1,12 +1,9 @@
 from engine import *
 
-from engine import Activated
-from game.Utils import toPygameY, calcPercent
 from ..image import Image
-from ..entity import Player
 from ..Rectangle import Rectangle
 
-from pygame import Surface, Color, SRCALPHA
+from pygame import Surface, Color
 
 class RectangleCollider(Rectangle, Collideable, Activated):
     color: Color|None = None
@@ -22,19 +19,3 @@ class ActuatorCollider(RectangleCollider, Actuator):
     def __init__(self, x:int, y:int, w:int, h:int, priority: int, hardColliding: bool, activated: Activated, texture:Color|str|None, surface:Surface) -> None:
         self.activated = activated
         super().__init__(x, y, w, h, priority, hardColliding, texture, surface)
-
-class PlayerDetectorCollider(ActuatorCollider):
-    player: Player
-    
-    def __init__(self, x: int, y: int, w: int, h: int, priority: int, hardColliding: bool, activated: Activated, texture: Color | str | None, player: Player, surface: Surface) -> None:
-        super().__init__(x, y, w, h, priority, hardColliding, activated, texture, surface)
-        self.player = player
-    
-    def update(self):
-        super().update()
-        if self.collidePlayer():
-            self.activated.onActuated()
-
-    def collidePlayer(self) -> bool:
-        """Retourne si le joueur touche le detecteur"""
-        return self.isColliding(self.player)
