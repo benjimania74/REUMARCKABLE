@@ -5,10 +5,11 @@ import pygame
 from abc import ABC, abstractmethod
 
 from game.Game import Game
-from game.Menu import Menu
+from game.menu import *
 from game.objects import *
 from game.Utils import LEVEL_DIRECTORY
 
+from os import listdir
 from os.path import isfile
 from importlib import import_module
 
@@ -135,7 +136,7 @@ class Level(ABC):
         """Boucle du niveau"""
         self.update()
         self.show()
-    
+
 def loadLevel(id:int, mainMenu: Menu, game: Game) -> Level|None:
     """Charge un niveau dynamiqument à partir de son identifiant"""
     res: Level|None = None
@@ -163,4 +164,22 @@ def loadLevelFromModule(module, mainMenu: Menu, game: Game) -> Level|None:
                 res = level
     except:
         pass   # si le module n'est pas un niveau, on retourne juste None
+    return res
+
+def loadLevels(mainMenu: Menu, game: Game) -> list[Level]:
+    """Charge les niveaux dynamiquement"""
+    res: list[Level] = []
+
+    levelFiles: list[str] = [f for f in listdir(LEVEL_DIRECTORY) if isfile(LEVEL_DIRECTORY + f) if f.endswith(".py") and f != "Level.py"]
+
+    for levelFile in levelFiles:
+        module = import_module(
+            __name__.replace(
+                "." + Level.__qualname__,
+                "." + levelFile[:-3]
+            )
+        )
+        level = loadLevelFromModule(module, mainMenu, game)
+        if level != None:
+            res.append(level)
     return res

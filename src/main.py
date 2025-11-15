@@ -4,46 +4,39 @@ from engine.Object import Object
 from engine.Percent import Percent
 
 from game.Game import Game
-from game.Menu import Menu
+from game.menu import *
 from game.Utils import toPygameY, calcPercent, FRAME_WIDTH, FRAME_HEIGHT
-from game.levels.Level import loadLevel
+from game.levels.Level import Level, loadLevels
 from game.objects import *
-
-class Rectangle(Object):
-    toDraw: Surface
-    drawSurface: Surface
-
-    def __init__(self, x:int|Percent, y:int|Percent, width:int|Percent, height:int|Percent, color:Color, drawSurface: Surface) -> None:
-        drawSurfaceWidth: int = drawSurface.get_width()
-        drawSurfaceHeight: int = drawSurface.get_height()
-
-        self.width = calcPercent(width, drawSurfaceWidth, drawSurfaceWidth)
-        self.height = calcPercent(height, drawSurfaceHeight, drawSurfaceHeight)
-
-        self.x = calcPercent(x, drawSurfaceWidth // 2 - self.width // 2, drawSurfaceWidth)
-        self.y = calcPercent(y, drawSurfaceHeight // 2 - self.height // 2, drawSurfaceHeight)
-
-        self.drawSurface = drawSurface
-
-        self.toDraw = Surface((self.width, self.height), flags=SRCALPHA)
-        self.toDraw.fill(color)
-
-    def show(self):
-        self.drawSurface.blit(
-            self.toDraw,
-            (
-                self.x,
-                toPygameY(self.y, self.height, self.drawSurface.get_height())
-            )
-        )
 
 game: Game = Game()
 mainMenu: Menu = Menu()
 
+levels: list[Level] = loadLevels(mainMenu, game)
+
+
 def startGame(btn: TextButton):
-    tuto = loadLevel(1, mainMenu, game)
-    if tuto != None:
-        tuto.setActive()
+    levelMenu: Menu = Menu()
+    levelMenuContent: list[Object] = [
+        Rectangle(0,0,-1,-1, Color(255,255,255), gameScreen)
+    ]
+    i: int = 0
+    width: int = FRAME_WIDTH // 5
+    height: int = FRAME_HEIGHT // 5
+    
+    while i < len(levels):
+        level = levels[i]
+        x: int = 10 + i * width
+        y: int = FRAME_HEIGHT - 10 + (i - 1) * height
+
+        def setActive(bnt: TextButton):
+            level.setActive()
+        card: TextButton = TextButton(x, y, width, height, level.name, None, 100, None, Color(100,25,171, 100), setActive, gameScreen)
+        levelMenuContent.append(card)
+        i += 1
+
+    levelMenu.add(*levelMenuContent)
+    game.setToRun(levelMenu.run)
     
 def stopGame(btn: TextButton):
     game.stop()

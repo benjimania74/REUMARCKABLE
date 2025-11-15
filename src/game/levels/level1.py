@@ -2,10 +2,10 @@ from pygame import Color
 from typing import Any
 
 from game.Game import Game
-from game.Menu import Menu
+from game.menu import *
 from game.levels.Level import Level
 from game.Utils import Percent, FRAME_WIDTH, FRAME_HEIGHT
-from game.Menu import *
+from game.menu import *
 from game.objects import *
 
 class Tutorial(Level):
