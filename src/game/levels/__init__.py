@@ -1,1 +1,1 @@
-from Level import *
+from .Level import *
