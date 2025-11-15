@@ -21,7 +21,7 @@ class Tutorial(Level):
         toDisplay = self.content
         actuators = self.actuators
 
-        rectangleCollidersInfo: list[ tuple[int|Percent,int|Percent,int|Percent,int|Percent,int,bool,Color|None] ] = [
+        rectangleCollidersInfo: list[ tuple[int|Percent,int|Percent,int|Percent,int|Percent,int,bool,Color|str|None] ] = [
             (0,200,FRAME_WIDTH//2 - 100,50,51,True,Color(0,255,0)), # sol principal
             (FRAME_WIDTH // 2 - 100, 180, FRAME_WIDTH // 2 + 100, 50, 51, True, Color(0,255,0)), # plateforme basse
             (Percent(50), 280, FRAME_WIDTH // 4, 50, 51, True, Color(50, 230, 65)), # plateforme haut
