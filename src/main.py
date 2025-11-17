@@ -21,15 +21,23 @@ def startGame(btn: TextButton):
         Rectangle(0,0,-1,-1, Color(255,255,255), gameScreen)
     ]
     i: int = 0
-    width: int = FRAME_WIDTH // 5
-    height: int = FRAME_HEIGHT // 5
-    
+    width: int = calcPercent(Percent(18.), FRAME_WIDTH, FRAME_WIDTH)
+    height: int = calcPercent(Percent(18.), FRAME_HEIGHT, FRAME_HEIGHT)
+
+    horizontalTagNumber: int = FRAME_WIDTH // width
+    linesNumber: int = FRAME_HEIGHT // height
+    # calculs des espaces entre les boutons de niveaux
+    # taille complète moins espace occupé divisé par nombre d'espace vide
+    widthGap: int = ( FRAME_WIDTH - horizontalTagNumber * width ) // (horizontalTagNumber + 1)
+    heightGap: int = ( FRAME_HEIGHT - linesNumber * height ) // (linesNumber + 1)
+
     while i < len(levels):
         level = levels[i]
-        x: int = 10 + i * width
-        y: int = FRAME_HEIGHT - 10 + (i - 1) * height
+        x: int = widthGap + i * ( widthGap + width )
+        y: int = FRAME_HEIGHT - (heightGap + height) * (i // horizontalTagNumber + 1)
 
         def setActive(bnt: TextButton):
+            level.reload()
             level.setActive()
         card: TextButton = TextButton(x, y, width, height, level.name, None, 100, None, Color(100,25,171, 100), setActive, gameScreen)
         levelMenuContent.append(card)
