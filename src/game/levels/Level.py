@@ -37,6 +37,7 @@ class Level(ABC, Activated):
         self.colliders = []
         self.content = []
         self.actuators = []
+        self.menu = None
 
     @abstractmethod
     def load(self) -> None:
@@ -48,6 +49,7 @@ class Level(ABC, Activated):
         self.colliders = []
         self.content = []
         self.actuators = []
+        self.menu = None
         self.load()
 
     def update(self) -> None:
@@ -98,7 +100,7 @@ class Level(ABC, Activated):
         self.reload()
     
     def onActuated(self, data: dict[str, Any] | None = None) -> None:
-        if data != None and data.get("type", None) == EndGamePlayerDetectorCollider.__qualname__:
+        if data != None and data.get("type", None) == EndGamePlayerDetectorCollider.__qualname__ and data.get("status", None) == "activated":
             endMenu: Menu = Menu()
             endMenu.add(
                 TextButton(-1, Percent(52), Percent(80), Percent(28), "Recommencer", None, 1000, None, Color(205,205,10), self.restart, self.game.getScreen()),
