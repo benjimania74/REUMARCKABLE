@@ -9,13 +9,10 @@ from game.menu import *
 from game.objects import *
 
 class Tutorial(Level):
-    menu: Menu|None
-
     def __init__(self, mainMenu: Menu, game: Game) -> None:
         super().__init__(mainMenu, game, "Tutoriel")
         
     def load(self) -> None:
-        self.menu = None
         game: Game = self.game
         colliders = self.colliders
         toDisplay = self.content
@@ -38,7 +35,6 @@ class Tutorial(Level):
 
         end: EndGamePlayerDetectorCollider = EndGamePlayerDetectorCollider(1000, 320, 50, 10, 51, True, self, Color(0,255,0), p, game.getScreen())
         colliders.append(end)
-        self.end = end
 
         toDisplay += colliders
 
