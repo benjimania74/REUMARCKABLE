@@ -31,11 +31,13 @@ class Rectangle(Object):
     def show(self):
         if isinstance(self.toShow, Surface):
             self.drawSurface.blit(
-                self.toShow,
+                transform.scale(self.toShow, (self.width, self.height)),
                 (
                     self.x,
                     toPygameY(self.y, self.height, self.drawSurface.get_height())
                 )
             )
         else:
+            self.toShow.width = self.width
+            self.toShow.height = self.height
             self.toShow.show()
