@@ -36,10 +36,13 @@ def startGame(btn: TextButton):
         x: int = widthGap + i * ( widthGap + width )
         y: int = FRAME_HEIGHT - (heightGap + height) * (i // horizontalTagNumber + 1)
 
-        def setActive(bnt: TextButton):
-            level.reload()
-            level.setActive()
-        card: TextButton = TextButton(x, y, width, height, level.name, None, 100, None, Color(100,25,171, 100), setActive, gameScreen)
+        def setActive(i: int) -> Callable[[TextButton], None]:
+            def f(btn: TextButton) -> None:
+                level = levels[i]
+                level.reload()
+                level.setActive()
+            return f
+        card: TextButton = TextButton(x, y, width, height, level.name, None, 100, None, Color(100,25,171, 100), setActive(i), gameScreen)
         levelMenuContent.append(card)
         i += 1
 
