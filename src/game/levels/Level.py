@@ -8,7 +8,7 @@ from abc import ABC, abstractmethod
 from game.Game import Game
 from game.menu import *
 from game.objects import *
-from game.Utils import LEVEL_DIRECTORY
+from game.Utils import LEVEL_DIRECTORY, FRAME_HEIGHT
 
 from os import listdir
 from os.path import isfile
@@ -44,7 +44,7 @@ class Level(ABC, Activated):
         """Permet de charger le niveau."""
         pass
 
-    def reload(self) -> None:
+    def reload(self, btn: TextButton|None=None) -> None:
         """Permet de recharger le niveau."""
         self.colliders = []
         self.content = []
@@ -84,11 +84,28 @@ class Level(ABC, Activated):
 
     def pauseGame(self):
         """Ouvre le menu de pause"""
+        gameScreen: Surface = self.game.getScreen()
+        buttonColor: Color = Color(0,255,0)
+
+        buttons: list[ tuple[str,Callable[[TextButton], None]] ] = [
+            ("Continuer", self.closeMenu),
+            ("Recommencer", self.reload),
+            ("Quitter", self.quitLevel)
+        ]
+        buttonWidth: int = 200
+        buttonHeight: int = 100
+        verticalGap: int = 50
+
+        verticalUsedSpace: int = len(buttons) * (buttonHeight + verticalGap) - verticalGap
+        yPos: int = FRAME_HEIGHT // 2 + verticalUsedSpace // 2 - buttonHeight # -buttonHeight car le calcul avant donne le haut de la boîte complète mais que le bouton à ses coordonnées en bas à gauche
+
         menu: Menu = Menu()
-        menu.add(
-            TextButton(-1,-1,200,100, "Continuer", None, 32,None, Color(0,255,0), self.closeMenu, self.game.getScreen()),
-            TextButton(-1, 100, 200, 100, "Quitter", None, 32, None, Color(0,255,0), self.quitLevel, self.game.getScreen())
-        )
+        for btn in buttons:
+            menu.add(
+                TextButton(-1, yPos, buttonWidth, buttonHeight, btn[0], None, 1000, None, buttonColor, btn[1], gameScreen)
+            )
+            yPos -= buttonHeight + verticalGap
+        
         self.setMenu(menu)
 
     def quitLevel(self, btn: TextButton|None = None):
