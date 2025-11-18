@@ -14,7 +14,18 @@ class PlayerDetectorCollider(ActuatorCollider):
     def update(self):
         super().update()
         if self.collidePlayer():
-            self.activated.onActuated(self.data)
+            self.onCollide()
+        else:
+            self.onNotCollide()
+        self.activated.onActuated(self.data)
+    
+    def onCollide(self):
+        """Actualise le PlayerDetectorCollider lors d'une collision avec l'un des joueurs"""
+        self.data["status"] = "activated"
+
+    def onNotCollide(self):
+        """Actualise le PlayerDetectorCollider quand il n'y a pas de collision avec l'un des joueurs"""
+        self.data["status"] = "unactivated"
 
     def collidePlayer(self) -> bool:
         """Retourne si le joueur touche le detecteur"""
@@ -31,3 +42,10 @@ class EndGamePlayerDetectorCollider(PlayerDetectorCollider):
         self.data = {
             "type": self.__class__.__qualname__
         }
+
+class ButtonPlayerDetectorCollider(PlayerDetectorCollider):
+    def onCollide(self):
+        self.data["status"] = "activated"
+
+    def onNotCollide(self):
+        self.data["status"] = "unactivated"
