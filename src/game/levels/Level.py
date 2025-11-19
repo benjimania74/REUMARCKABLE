@@ -67,7 +67,18 @@ class Level(ABC, Activated):
         self.game.getScreen().fill("white")
         for o in self.content:
             o.show()
-        self.activePlayer.showAt(0,0)
+        phantom: PhantomPlayer = self.phantom
+
+        showWidth: int = phantom.width * 2
+        showHeight: int = phantom.height * 2
+
+        showX: int = FRAME_WIDTH - showWidth - 10
+        showY: int = 10
+
+        phantom.showAtSize(FRAME_WIDTH - showWidth - 10, 10, showWidth, showHeight)
+        
+        if not phantom.isActive and not phantom.canSetActive():
+            Image(showX - 5, showY - 5, showWidth + 10, showHeight + 10, "cross.png", self.game.getScreen()).show()
         
         if self.menu != None:
             self.menu.show()
