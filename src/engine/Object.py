@@ -17,6 +17,13 @@ class Object(ABC):
         self.show()
         self.x = x
         self.y = y
+    
+    def showAtSize(self, x:int, y:int, width:int, height:int):
+        self.width, width = width, self.width
+        self.height, height = height, self.height
+        self.showAt(x,y)
+        self.width = width
+        self.height = height
 
     def update(self):
         """Mets à jour l'état d'un objet"""
