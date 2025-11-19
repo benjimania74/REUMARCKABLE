@@ -35,11 +35,6 @@ class Tutorial(Level):
         colliders.append(end)
 
         toDisplay += colliders
-
-        actuators.append(
-            ActuatorCollider(150,260, 20,10, 0, False, end,"", game.getScreen())
-        )
-
         toDisplay += actuators
 
         self.player = p
