@@ -46,4 +46,4 @@ def getImage(imageName: str) -> Surface:
     """Retourne la surface de l'image demandé"""
     if not isfile(IMAGE_DIRECTORY + imageName):
         imageName = NO_TEXTURE
-    return image.load(IMAGE_DIRECTORY + imageName).convert() 
+    return image.load(IMAGE_DIRECTORY + imageName).convert_alpha() 
