@@ -8,7 +8,7 @@ from abc import ABC, abstractmethod
 from game.Game import Game
 from game.menu import *
 from game.objects import *
-from game.Utils import LEVEL_DIRECTORY, FRAME_HEIGHT
+from game.Utils import LEVEL_DIRECTORY, FRAME_HEIGHT, FRAME_WIDTH
 
 from os import listdir
 from os.path import isfile
@@ -34,11 +34,17 @@ class Level(ABC, Activated):
         self.game = game
         self.mainMenu = mainMenu
 
-        self.colliders = []
+        self.initContent()
+    
+    def initContent(self):
+        self.colliders = [
+            RectangleCollider(0, 0, 0, FRAME_HEIGHT, 100, True, None, self.game.getScreen()), # mur écran gauche
+            RectangleCollider(FRAME_WIDTH, 0, 0, FRAME_HEIGHT, 100, True, None, self.game.getScreen()) # mur écran droite
+        ]
         self.content = []
         self.actuators = []
         self.menu = None
-
+        
     @abstractmethod
     def load(self) -> None:
         """Permet de charger le niveau."""
@@ -46,10 +52,7 @@ class Level(ABC, Activated):
 
     def reload(self, btn: TextButton|None=None) -> None:
         """Permet de recharger le niveau."""
-        self.colliders = []
-        self.content = []
-        self.actuators = []
-        self.menu = None
+        self.initContent()
         self.load()
 
     def update(self) -> None:

@@ -22,8 +22,6 @@ class Tutorial(Level):
             (0,200,FRAME_WIDTH//2 - 100,50,51,True,Color(0,255,0)), # sol principal
             (FRAME_WIDTH // 2 - 100, 180, FRAME_WIDTH // 2 + 100, 50, 51, True, Color(0,255,0)), # plateforme basse
             (Percent(50), 280, FRAME_WIDTH // 4, 50, 51, True, Color(50, 230, 65)), # plateforme haut
-            (0, 0, 0, FRAME_HEIGHT, 100, True, None), # mur écran gauche
-            (FRAME_WIDTH, 0, 0, FRAME_HEIGHT, 100, True, None) # mur écran droit
         ]
         for rci in rectangleCollidersInfo:
             colliders.append( RectangleCollider(*rci, game.getScreen()) )
