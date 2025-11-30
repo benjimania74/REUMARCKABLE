@@ -32,6 +32,8 @@ END_COLLIDER_TEXTURE: Texture = Color(255,0,0)
 
 BUTTON_COLOR: Texture = Color(255,0,255)
 
+PLAYER_DETECTOR_COLOR: Texture = Color(210,104,157)
+
 # Fonctions utiles
 def toPygameY(y:int, height:int, surfaceHeight:int) -> int:
     """Transforme une coordonnée y pour laquel y=0 équivaut à ce que l'on soit en bas de la surface en coordonnée telle que y=0 équivaut à ce que l'on soit en haut de la surface"""
