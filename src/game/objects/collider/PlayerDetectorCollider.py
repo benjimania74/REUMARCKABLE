@@ -5,11 +5,13 @@ from ..entity import Player
 class PlayerDetectorCollider(ActuatorCollider):
     players: list[Player]
     data: dict[str, Any]
+    actuateOnUpdate: bool
 
     def __init__(self, x: int, y: int, w: int, h: int, priority: int, hardColliding: bool, activated: Activated, texture: Color | str | None, players: list[Player], surface: Surface) -> None:
         super().__init__(x, y, w, h, priority, hardColliding, activated, texture, surface)
         self.players = players
         self.data = {}
+        self.actuateOnUpdate = True
     
     def update(self):
         super().update()
@@ -17,7 +19,8 @@ class PlayerDetectorCollider(ActuatorCollider):
             self.onCollide()
         else:
             self.onNotCollide()
-        self.activated.onActuated(self.data)
+        if self.actuateOnUpdate:
+            self.activated.onActuated(self.data)
     
     def onCollide(self):
         """Actualise le PlayerDetectorCollider lors d'une collision avec l'un des joueurs"""
@@ -44,8 +47,14 @@ class EndGamePlayerDetectorCollider(PlayerDetectorCollider):
         }
 
 class ButtonPlayerDetectorCollider(PlayerDetectorCollider):
-    def onCollide(self):
-        self.data["status"] = "activated"
+    actuated: bool
 
-    def onNotCollide(self):
-        self.data["status"] = "unactivated"
+    def __init__(self, x: int, y: int, w: int, h: int, priority: int, hardColliding: bool, activated: Activated, texture: Color | str | None, players: list[Player], surface: Surface) -> None:
+        super().__init__(x, y, w, h, priority, hardColliding, activated, texture, players, surface)
+        self.actuateOnUpdate = False
+        self.actuated = False
+    
+    def actuate(self):
+        self.actuated = not self.actuated
+        self.data["status"] = "activated" if self.actuated else "unactivated"
+        self.activated.onActuated(self.data)
