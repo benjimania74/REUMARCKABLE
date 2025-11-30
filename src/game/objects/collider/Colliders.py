@@ -16,6 +16,6 @@ class RectangleCollider(Rectangle, Collideable, Activated):
         self.hardColliding = hardColliding
 
 class ActuatorCollider(RectangleCollider, Actuator):
-    def __init__(self, x:int, y:int, w:int, h:int, priority: int, hardColliding: bool, activated: Activated, texture:Color|str|None, surface:Surface) -> None:
-        self.activated = activated
+    def __init__(self, x:int, y:int, w:int, h:int, priority: int, hardColliding: bool, activateds: list[Activated], texture:Color|str|None, surface:Surface) -> None:
+        self.activateds = activateds
         super().__init__(x, y, w, h, priority, hardColliding, texture, surface)

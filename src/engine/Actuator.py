@@ -5,7 +5,10 @@ class Activated:
         pass
 
 class Actuator:
-    activated: Activated
+    activateds: list[Activated]
+    data: dict[str, Any]
+    
     def actuate(self) -> None:
-        self.activated.onActuated({"actuator": self})
+        for activated in self.activateds:
+            activated.onActuated(self.data)
         
