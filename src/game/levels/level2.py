@@ -30,7 +30,7 @@ class DoorLevel(Level):
         door: Door = Door(Percent(80), Percent(30), 50, Percent(30), 50, Percent(5), 51, DOOR_TEXTURE, gameScreen)
         colliders.append(door)
 
-        bpdc: ButtonPlayerDetectorCollider = ButtonPlayerDetectorCollider(450, 356, 50, 10, 51, False, door, BUTTON_COLOR, [player,phantom], gameScreen)
+        bpdc: PlayerDetectorCollider = PlayerDetectorCollider(450, 356, 50, 10, 51, False, door, BUTTON_COLOR, [player,phantom], gameScreen)
         colliders.append(bpdc)
 
         end: EndGamePlayerDetectorCollider = EndGamePlayerDetectorCollider(Percent(90), Percent(37), 50, 5, 51, False, self, END_COLLIDER_TEXTURE, player, gameScreen)
