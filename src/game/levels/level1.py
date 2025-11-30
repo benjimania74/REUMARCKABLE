@@ -13,7 +13,7 @@ class Tutorial(Level):
         super().__init__(mainMenu, game, "Tutoriel")
         
     def load(self) -> None:
-        game: Game = self.game
+        gameScreen: Surface = self.game.getScreen()
         colliders = self.colliders
         toDisplay = self.content
         actuators = self.actuators
@@ -24,14 +24,14 @@ class Tutorial(Level):
             (Percent(50), 280, FRAME_WIDTH // 4, 50, 51, True, GROUND_TEXTURE), # plateforme haut
         ]
         for rci in rectangleCollidersInfo:
-            colliders.append( RectangleCollider(*rci, game.getScreen()) )
+            colliders.append( RectangleCollider(*rci, gameScreen) )
 
-        p: Player = Player(0,400, 50, 50, PLAYER_TEXTURE, colliders, game.getScreen())
-        phantom: PhantomPlayer = PhantomPlayer(0, 350, 50, 50, PHANTOM_TEXTURE, colliders, game.getScreen())
+        p: Player = Player(0,400, 50, 50, PLAYER_TEXTURE, colliders, gameScreen)
+        phantom: PhantomPlayer = PhantomPlayer(0, 350, 50, 50, PHANTOM_TEXTURE, colliders, gameScreen)
         colliders.append(p)
         colliders.append(phantom)
 
-        end: EndGamePlayerDetectorCollider = EndGamePlayerDetectorCollider(1000, 350, 50, 10, 51, True, self, END_COLLIDER_TEXTURE, p, game.getScreen())
+        end: EndGamePlayerDetectorCollider = EndGamePlayerDetectorCollider(1000, 350, 50, 10, 51, True, self, END_COLLIDER_TEXTURE, p, gameScreen)
         colliders.append(end)
 
         toDisplay += colliders
