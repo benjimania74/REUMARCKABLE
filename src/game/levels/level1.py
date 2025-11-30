@@ -31,7 +31,7 @@ class Tutorial(Level):
         colliders.append(p)
         colliders.append(phantom)
 
-        end: EndGamePlayerDetectorCollider = EndGamePlayerDetectorCollider(1000, 320, 50, 10, 51, True, self, END_COLLIDER_TEXTURE, p, game.getScreen())
+        end: EndGamePlayerDetectorCollider = EndGamePlayerDetectorCollider(1000, 350, 50, 10, 51, True, self, END_COLLIDER_TEXTURE, p, game.getScreen())
         colliders.append(end)
 
         toDisplay += colliders
