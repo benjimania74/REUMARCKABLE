@@ -1,8 +1,12 @@
-from .Player import Player
+from .Player import *
 
 class PhantomPlayer(Player):
     isActive: bool = False
-    movementsList: list[int] = []
+    movementsList: list[int]
+
+    def __init__(self, x: int|Percent, y: int|Percent, width: int|Percent, height: int|Percent, texture: Color|str, collideableList: list[Collideable], drawSurface: Surface) -> None:
+        super().__init__(x,y,width,height,texture,collideableList,drawSurface)
+        self.movementsList = []
 
     def jump(self):
         if self.isActive and not self.isJumping:
