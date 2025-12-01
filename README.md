@@ -21,6 +21,7 @@ Des graphismes simples, des énigmes sympathiques et des mécaniques intuitives,
 
 ### Prérequis
 - Python >= 3.10
+- Pygame >= 2.6.0 (installation via le `requirements.txt` possible)
 
 ### Commandes
 ```bash
