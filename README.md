@@ -1,18 +1,20 @@
 # REUMARCKABLE
 
-**REUMARCKABLE** est un jeu-vidéo développé pour un projet d'étude.
+**REUMARCKABLE** est un jeu-vidéo développé pour un projet d'étude à l'Université Savoie Mont-Blanc.
 
 Le but du jeu ? Résoudre un puzzle en allant d'un point A à un point B avec le personnage principal.
 
 Mais si ce n'était que ça, le jeu n'aurait rien d'original. Pour l'originalité, il y a un petit "fantôme", après l'avoir bougé, il refait les mouvements à l'inverse pratiquement aussi bien qu'au début !
+
+Des graphismes simples, des énigmes sympathiques et des mécaniques intuitives, un jeu qui semble tout avoir pour vous plaire !
 
 ## Quelques images
 ![Niveau 1](./images/lvl1.png)
 <p style="text-align:center">Niveau 1</p>
 </br>
 
-![Niveau 2](./images/lvl2.png)
-<p style="text-align:center">Niveau 2</p>
+![Niveau 3](./images/lvl3.png)
+<p style="text-align:center">Niveau 3</p>
 </br>
 
 ## Installation
