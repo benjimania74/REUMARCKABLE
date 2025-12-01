@@ -8,7 +8,7 @@ from abc import ABC, abstractmethod
 from game.Game import Game
 from game.menu import *
 from game.objects import *
-from game.Utils import LEVEL_DIRECTORY, FRAME_HEIGHT, FRAME_WIDTH
+from game.Utils import *
 
 from os import listdir
 from os.path import isfile
@@ -99,27 +99,28 @@ class Level(ABC, Activated):
     def pauseGame(self):
         """Ouvre le menu de pause"""
         gameScreen: Surface = self.game.getScreen()
-        buttonColor: Color = Color(0,255,0)
 
         buttons: list[ tuple[str,Callable[[TextButton], None]] ] = [
             ("Continuer", self.closeMenu),
             ("Recommencer", self.reload),
             ("Quitter", self.quitLevel)
         ]
-        buttonWidth: int = 200
-        buttonHeight: int = 100
+        buttonWidth: int|Percent = Percent(50) 
+        buttonHeight: int = 150
         verticalGap: int = 50
 
         verticalUsedSpace: int = len(buttons) * (buttonHeight + verticalGap) - verticalGap
         yPos: int = FRAME_HEIGHT // 2 + verticalUsedSpace // 2 - buttonHeight # -buttonHeight car le calcul avant donne le haut de la boîte complète mais que le bouton à ses coordonnées en bas à gauche
 
         menu: Menu = Menu()
+        menu.add(
+            Rectangle(0, 0, -1, -1, Color(150, 150, 150, 117), gameScreen)
+        )
         for btn in buttons:
             menu.add(
-                TextButton(-1, yPos, buttonWidth, buttonHeight, btn[0], None, 1000, None, buttonColor, btn[1], gameScreen)
+                TextButton(-1, yPos, buttonWidth, buttonHeight, btn[0], None, 1000, MENU_BUTTON_TEXT_COLOR, MENU_BUTTON_COLOR, btn[1], gameScreen)
             )
             yPos -= buttonHeight + verticalGap
-        
         self.setMenu(menu)
 
     def quitLevel(self, btn: TextButton|None = None):
@@ -134,8 +135,8 @@ class Level(ABC, Activated):
         if data != None and data.get("type", None) == EndGamePlayerDetectorCollider.__qualname__ and data.get("status", None) == "activated":
             endMenu: Menu = Menu()
             endMenu.add(
-                TextButton(-1, Percent(52), Percent(80), Percent(28), "Recommencer", None, 1000, None, Color(205,205,10), self.restart, self.game.getScreen()),
-                TextButton(-1, Percent(20), Percent(80), Percent(28), "Quitter", None, 1000, None, Color(205,205,10), self.quitLevel, self.game.getScreen())
+                TextButton(-1, Percent(52), Percent(80), Percent(28), "Recommencer", None, 1000, MENU_BUTTON_TEXT_COLOR, MENU_BUTTON_COLOR, self.restart, self.game.getScreen()),
+                TextButton(-1, Percent(20), Percent(80), Percent(28), "Quitter", None, 1000, MENU_BUTTON_TEXT_COLOR, MENU_BUTTON_COLOR, self.quitLevel, self.game.getScreen())
             )
             self.setMenu(endMenu)
 

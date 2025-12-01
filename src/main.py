@@ -5,7 +5,7 @@ from engine.Percent import Percent
 
 from game.Game import Game
 from game.menu import *
-from game.Utils import toPygameY, calcPercent, FRAME_WIDTH, FRAME_HEIGHT
+from game.Utils import *
 from game.levels.Level import Level, loadLevels
 from game.objects import *
 
@@ -56,8 +56,8 @@ gameScreen = game.getScreen()
 objs: list[Object] = [
     Rectangle(-1,0,-1,-1, Color(255,0,255), gameScreen),
     StaticText(0,0,0,0,"Reumarckable",None,32,Color(255,0,0),None,gameScreen),
-    TextButton(-1,-1,300,80, "Jouer", None, 100, Color(0,255,0), Color(255,0,0), startGame, gameScreen),
-    TextButton(-1, 100, 300, 80, "Quitter", None, 100, Color(0,255,0), Color(255,0,0), stopGame, gameScreen),
+    TextButton(-1,-1,300,80, "Jouer", None, 100, MENU_BUTTON_TEXT_COLOR, MENU_BUTTON_COLOR, startGame, gameScreen),
+    TextButton(-1, 100, 300, 80, "Quitter", None, 100, MENU_BUTTON_TEXT_COLOR, MENU_BUTTON_COLOR, stopGame, gameScreen),
 ]
 mainMenu.add(*objs)
 game.setToRun(mainMenu.run)
