@@ -36,7 +36,7 @@ def startGame(btn: TextButton):
         x: int = widthGap + i * ( widthGap + width )
         y: int = FRAME_HEIGHT - (heightGap + height) * (i // horizontalTagNumber + 1)
 
-        def setActive(i: int) -> Callable[[TextButton], None]:
+        def setActive(i: int) -> Callable[[TextButton], None]: # fonction car sinon ça modifie la fonction f à chaque boucle au lieu d'en créer une autre
             def f(btn: TextButton) -> None:
                 level = levels[i]
                 level.reload()
