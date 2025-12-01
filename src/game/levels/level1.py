@@ -18,6 +18,32 @@ class Tutorial(Level):
         toDisplay = self.content
         actuators = self.actuators
 
+        indicationTextsText: list[str] = [
+            "Appuyez sur V pour changer le personnage",
+            "Allez à la plateforme rouge avec le jaune"
+        ]
+
+        indicationTexts: list[Text] = []
+        yPercent: float = 85
+        for text in indicationTextsText:
+            indicationTexts.append(
+                StaticText(
+                    Percent(5),
+                    Percent(yPercent),
+                    Percent(90),
+                    Percent(10),
+                    text,
+                    None,
+                    1000,
+                    Color(0,0,0),
+                    None,
+                    gameScreen
+                )
+            )
+            yPercent -= 10
+
+        toDisplay += indicationTexts
+
         rectangleCollidersInfo: list[ tuple[int|Percent,int|Percent,int|Percent,int|Percent,int,bool,Color|str|None] ] = [
             (0,200,FRAME_WIDTH//2 - 100,50,51,True,GROUND_TEXTURE), # sol principal
             (FRAME_WIDTH // 2 - 100, 180, FRAME_WIDTH // 2 + 100, 50, 51, True, GROUND_TEXTURE), # plateforme basse

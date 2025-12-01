@@ -14,6 +14,32 @@ class DoorLevel(Level):
         gameScreen: Surface = self.game.getScreen()
 
         colliders = self.colliders
+        content = self.content
+
+        indicationTextsText: list[str] = [
+            "Restez placé sur le sol violet"
+        ]
+
+        indicationTexts: list[Text] = []
+        yPercent: float = 85
+        for text in indicationTextsText:
+            indicationTexts.append(
+                StaticText(
+                    Percent(5),
+                    Percent(yPercent),
+                    Percent(90),
+                    Percent(10),
+                    text,
+                    None,
+                    1000,
+                    Color(0,0,0),
+                    None,
+                    gameScreen
+                )
+            )
+            yPercent -= 10
+
+        content += indicationTexts
 
         player: Player = Player(0, Percent(50), 50, 50, PLAYER_TEXTURE, self.colliders, gameScreen)
         phantom: PhantomPlayer = PhantomPlayer(0, Percent(40), 50, 50, PHANTOM_TEXTURE, self.colliders, gameScreen)
@@ -40,7 +66,7 @@ class DoorLevel(Level):
         self.phantom = phantom
         self.activePlayer = self.player
 
-        self.content += colliders
+        content += colliders
 
 export: dict[str,Any] = {
     "class_name": DoorLevel.__qualname__
