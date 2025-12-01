@@ -226,8 +226,7 @@ def loadLevels(mainMenu: Menu, game: Game) -> list[Level]:
     res: list[Level] = []
 
     levelFiles: list[str] = [f for f in listdir(LEVEL_DIRECTORY) if isfile(LEVEL_DIRECTORY + f) if f.endswith(".py") and f not in ["Level.py", "__init__.py"]]
-    levelFiles.reverse()
-
+    levelFiles.sort()
     for levelFile in levelFiles:
         module = import_module(
             __name__.replace(
