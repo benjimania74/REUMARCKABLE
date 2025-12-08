@@ -7,7 +7,7 @@ class PlayerDetectorCollider(ActuatorCollider):
     data: dict[str, Any]
     actuateOnUpdate: bool
 
-    def __init__(self, x: int, y: int, w: int, h: int, priority: int, hardColliding: bool, activateds: list[Activated], texture: Color | str | None, players: list[Player], surface: Surface) -> None:
+    def __init__(self, x: int|Percent, y: int|Percent, w: int|Percent, h: int|Percent, priority: int, hardColliding: bool, activateds: list[Activated], texture: Color | str | None, players: list[Player], surface: Surface) -> None:
         super().__init__(x, y, w, h, priority, hardColliding, activateds, texture, surface)
         self.players = players
         self.data = {}
@@ -20,7 +20,6 @@ class PlayerDetectorCollider(ActuatorCollider):
         else:
             self.onNotCollide()
         if self.actuateOnUpdate:
-            #self.activateds.onActuated(self.data)
             self.actuate()
     
     def onCollide(self):
@@ -41,7 +40,7 @@ class PlayerDetectorCollider(ActuatorCollider):
         return isTouching
 
 class EndGamePlayerDetectorCollider(PlayerDetectorCollider):
-    def __init__(self, x: int, y: int, w: int, h: int, priority: int, hardColliding: bool, activated: Activated, texture: Color | str | None, player: Player, surface: Surface) -> None:
+    def __init__(self, x: int|Percent, y: int|Percent, w: int|Percent, h: int|Percent, priority: int, hardColliding: bool, activated: Activated, texture: Color | str | None, player: Player, surface: Surface) -> None:
         super().__init__(x, y, w, h, priority, hardColliding, [activated], texture, [player], surface)
         self.data = {
             "type": self.__class__.__qualname__
@@ -50,7 +49,7 @@ class EndGamePlayerDetectorCollider(PlayerDetectorCollider):
 class ButtonPlayerDetectorCollider(PlayerDetectorCollider):
     actuated: bool
 
-    def __init__(self, x: int, y: int, w: int, h: int, priority: int, hardColliding: bool, activateds: list[Activated], texture: Color | str | None, players: list[Player], surface: Surface) -> None:
+    def __init__(self, x: int|Percent, y: int|Percent, w: int|Percent, h: int|Percent, priority: int, hardColliding: bool, activateds: list[Activated], texture: Color | str | None, players: list[Player], surface: Surface) -> None:
         super().__init__(x, y, w, h, priority, hardColliding, activateds, texture, players, surface)
         self.actuateOnUpdate = False
         self.actuated = False
@@ -58,5 +57,4 @@ class ButtonPlayerDetectorCollider(PlayerDetectorCollider):
     def actuate(self):
         self.actuated = not self.actuated
         self.data["status"] = "activated" if self.actuated else "unactivated"
-        #self.activated.onActuated(self.data)
         super().actuate()
