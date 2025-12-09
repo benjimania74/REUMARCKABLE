@@ -10,7 +10,7 @@ class PlayerDetectorCollider(ActuatorCollider):
     def __init__(self, x: int|Percent, y: int|Percent, w: int|Percent, h: int|Percent, priority: int, hardColliding: bool, activateds: list[Activated], texture: Color | str | None, players: list[Player], surface: Surface) -> None:
         super().__init__(x, y, w, h, priority, hardColliding, activateds, texture, surface)
         self.players = players
-        self.data = {}
+        self.data = {"status":"unactivated"}
         self.actuateOnUpdate = True
     
     def update(self):
@@ -19,15 +19,17 @@ class PlayerDetectorCollider(ActuatorCollider):
             self.onCollide()
         else:
             self.onNotCollide()
-        if self.actuateOnUpdate:
-            self.actuate()
     
     def onCollide(self):
         """Actualise le PlayerDetectorCollider lors d'une collision avec l'un des joueurs"""
+        if self.data["status"] == "unactivated":
+            self.actuate()
         self.data["status"] = "activated"
 
     def onNotCollide(self):
         """Actualise le PlayerDetectorCollider quand il n'y a pas de collision avec l'un des joueurs"""
+        if self.data["status"] == "activated":
+            self.actuate()
         self.data["status"] = "unactivated"
 
     def collidePlayer(self) -> bool:
