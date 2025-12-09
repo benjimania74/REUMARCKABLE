@@ -140,7 +140,7 @@ class Player(Entity):
         i = 0
         while i < len(self.collideableList):
             collideable = self.collideableList[i]
-            if collideable != self and collideable.hardColliding:
+            if collideable != self and collideable.hardColliding and collideable.width != 0 and collideable.height != 0:
                 cc: tuple[float, float] = self.willCollideWhen(collideable, xMove, yMove) # cc : collide coefficients
                 if cc != (-1,-1):
                     if not collide and collideCoefficients == (-1,-1):
