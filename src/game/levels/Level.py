@@ -37,9 +37,12 @@ class Level(ABC, Activated):
         self.initContent()
     
     def initContent(self):
+        mg: RectangleCollider = RectangleCollider(0, 0, 1, FRAME_HEIGHT, 100, True, None, self.game.getScreen()) # mur écran gauche
+        md: RectangleCollider = RectangleCollider(FRAME_WIDTH, 0, 1, FRAME_HEIGHT, 100, True, None, self.game.getScreen()) # mur écran droite
+        mg.x = -1
         self.colliders = [
-            RectangleCollider(0, 0, 0, FRAME_HEIGHT, 100, True, None, self.game.getScreen()), # mur écran gauche
-            RectangleCollider(FRAME_WIDTH, 0, 0, FRAME_HEIGHT, 100, True, None, self.game.getScreen()) # mur écran droite
+            mg,
+            md
         ]
         self.content = []
         self.actuators = []
