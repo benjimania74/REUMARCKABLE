@@ -42,8 +42,6 @@ class ClickDoor(Door): # porte avec levier
         self.isClosed = True
 
     def onActuated(self, data: dict[str, Any] | None = None) -> None:
-        if data == None: return
-
         if self.isClosed:
             self.width = self.openWidth
             self.height = self.openHeight
