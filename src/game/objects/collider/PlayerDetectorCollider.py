@@ -28,7 +28,7 @@ class PlayerDetectorCollider(ActuatorCollider):
         
         self.data["status"] = "activated"
 
-        if actuate:
+        if actuate and self.actuateOnUpdate:
             self.actuate()
 
     def onNotCollide(self):
@@ -39,7 +39,7 @@ class PlayerDetectorCollider(ActuatorCollider):
         
         self.data["status"] = "unactivated"
 
-        if actuate:
+        if actuate and self.actuateOnUpdate:
             self.actuate()
 
     def collidePlayer(self) -> bool:
