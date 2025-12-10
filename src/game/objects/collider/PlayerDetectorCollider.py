@@ -22,15 +22,25 @@ class PlayerDetectorCollider(ActuatorCollider):
     
     def onCollide(self):
         """Actualise le PlayerDetectorCollider lors d'une collision avec l'un des joueurs"""
+        actuate: bool = False
         if self.data["status"] == "unactivated":
-            self.actuate()
+            actuate = True
+        
         self.data["status"] = "activated"
+
+        if actuate:
+            self.actuate()
 
     def onNotCollide(self):
         """Actualise le PlayerDetectorCollider quand il n'y a pas de collision avec l'un des joueurs"""
+        actuate: bool = False
         if self.data["status"] == "activated":
-            self.actuate()
+            actuate = True
+        
         self.data["status"] = "unactivated"
+
+        if actuate:
+            self.actuate()
 
     def collidePlayer(self) -> bool:
         """Retourne si le joueur touche le detecteur"""
@@ -44,9 +54,8 @@ class PlayerDetectorCollider(ActuatorCollider):
 class EndGamePlayerDetectorCollider(PlayerDetectorCollider):
     def __init__(self, x: int|Percent, y: int|Percent, w: int|Percent, h: int|Percent, priority: int, hardColliding: bool, activated: Activated, texture: Color | str | None, player: Player, surface: Surface) -> None:
         super().__init__(x, y, w, h, priority, hardColliding, [activated], texture, [player], surface)
-        self.data = {
-            "type": self.__class__.__qualname__
-        }
+        self.data["type"] = self.__class__.__qualname__
+        #self.data["status"] = "activated"
 
 class ButtonPlayerDetectorCollider(PlayerDetectorCollider):
     actuated: bool
