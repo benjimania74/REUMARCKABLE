@@ -15,19 +15,24 @@ class MainMenu(Menu):
         
         gameScreen: Surface = game.getScreen()
         self.game = game
-
         objs: list[Object] = [
-            Rectangle(-1,0,-1,-1, Color(255,0,255), gameScreen),
+            Rectangle(-1,0,-1,-1, Color(255,255,255), gameScreen),
             StaticText(0,0,0,0,"Reumarckable",None,32,Color(255,0,0),None,gameScreen),
-            TextButton(-1,-1,300,80, "Jouer", None, 100, MENU_BUTTON_TEXT_COLOR, MENU_BUTTON_COLOR, self.startGame, gameScreen),
-            TextButton(-1, 100, 300, 80, "Quitter", None, 100, MENU_BUTTON_TEXT_COLOR, MENU_BUTTON_COLOR, self.stopGame, gameScreen),
+            TextButton(-1, FRAME_HEIGHT // 2 + 10, 300, 80, "Jouer", None, 100, MENU_BUTTON_TEXT_COLOR, MENU_BUTTON_COLOR, self.startGame, gameScreen),
+            TextButton(-1, FRAME_HEIGHT // 2 - 90, 300, 80, "Quitter", None, 100, MENU_BUTTON_TEXT_COLOR, MENU_BUTTON_COLOR, self.stopGame, gameScreen),
         ]
         self.add(*objs)
     
-    def stopGame(self, btn: TextButton):
+    def run(self, game:Game):
+        if self.menuSelect:
+            self.startGame()
+        else:
+            super().run(game)
+    
+    def stopGame(self, btn: TextButton|None=None):
         self.game.stop()
 
-    def startGame(self, btn: TextButton):
+    def startGame(self, btn: TextButton|None=None):
         game: Game = self.game
         gameScreen: Surface = game.getScreen()
         
@@ -48,8 +53,6 @@ class MainMenu(Menu):
         widthGap: int = ( FRAME_WIDTH - horizontalTagNumber * width ) // (horizontalTagNumber + 1)
         heightGap: int = ( FRAME_HEIGHT - linesNumber * height ) // (linesNumber + 1)
 
-        print((FRAME_WIDTH // width) *(width + widthGap) + widthGap)
-
         while i < len(levels):
             level = levels[i]
             x: int = widthGap + (i % horizontalTagNumber) * ( widthGap + width )
@@ -65,5 +68,14 @@ class MainMenu(Menu):
             levelMenuContent.append(card)
             i += 1
 
+        def back(btn: TextButton):
+            self.menuSelect = False
+            game.setToRun(self.run)
+
+        levelMenuContent.append(
+            TextButton(-1, heightGap, width, height, "Retour", None, 100, MENU_BUTTON_TEXT_COLOR, MENU_BUTTON_COLOR, back, gameScreen)
+        )
+
         levelMenu.add(*levelMenuContent)
         game.setToRun(levelMenu.run)
+        self.menuSelect = True
