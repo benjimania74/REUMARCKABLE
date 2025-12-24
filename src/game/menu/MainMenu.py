@@ -18,8 +18,8 @@ class MainMenu(Menu):
         objs: list[Object] = [
             Rectangle(-1,0,-1,-1, Color(255,255,255), gameScreen),
             StaticText(0,0,0,0,"Reumarckable",None,32,Color(255,0,0),None,gameScreen),
-            TextButton(-1, FRAME_HEIGHT // 2 + 10, 300, 80, "Jouer", None, 100, MENU_BUTTON_TEXT_COLOR, MENU_BUTTON_COLOR, self.startGame, gameScreen),
-            TextButton(-1, FRAME_HEIGHT // 2 - 90, 300, 80, "Quitter", None, 100, MENU_BUTTON_TEXT_COLOR, MENU_BUTTON_COLOR, self.stopGame, gameScreen),
+            TextButton(-1, FRAME_HEIGHT // 2 + 10, 300, 80, "Jouer", None, 1000, MENU_BUTTON_TEXT_COLOR, MENU_BUTTON_COLOR, self.startGame, gameScreen),
+            TextButton(-1, FRAME_HEIGHT // 2 - 90, 300, 80, "Quitter", None, 1000, MENU_BUTTON_TEXT_COLOR, MENU_BUTTON_COLOR, self.stopGame, gameScreen),
         ]
         self.add(*objs)
     
@@ -64,7 +64,7 @@ class MainMenu(Menu):
                     level.reload()
                     level.setActive()
                 return f
-            card: TextButton = TextButton(x, y, width, height, level.name, None, 100, None, Color(100,25,171, 100), setActive(i), gameScreen)
+            card: TextButton = TextButton(x, y, width, height, level.name, None, 1000, None, Color(100,25,171, 100), setActive(i), gameScreen)
             levelMenuContent.append(card)
             i += 1
 
@@ -73,7 +73,7 @@ class MainMenu(Menu):
             game.setToRun(self.run)
 
         levelMenuContent.append(
-            TextButton(-1, heightGap, width, height, "Retour", None, 100, MENU_BUTTON_TEXT_COLOR, MENU_BUTTON_COLOR, back, gameScreen)
+            TextButton(-1, heightGap, width, height, "Retour", None, 1000, MENU_BUTTON_TEXT_COLOR, MENU_BUTTON_COLOR, back, gameScreen)
         )
 
         levelMenu.add(*levelMenuContent)
