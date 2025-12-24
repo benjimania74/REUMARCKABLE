@@ -40,3 +40,45 @@ Après installation, pour lancer le jeu, il suffit de lancer le fichier `src/mai
 source ./env/bin/activate base # se met dans l'environnement
 python3 ./src/main.py
 ```
+
+## Commandes
+
+| Action | Touche |
+| --- | :---: |
+| Gauche | `Q` |
+| Droite | `D` |
+| Saut | `Esp` |
+| Changer Joueur | `V` |
+| Pause | `Esc` |
+
+## Créer votre niveau
+
+Pour créer votre propre niveau, il vous suffit d'ajouter un script Python dans le dossier `src/game/levels/`.
+
+Votre Script doit respecter le format suivant :
+```py
+from .Level import *
+from ..Utils import *
+...
+
+class MonNiveau(Level):
+    ...
+    def __init__(self, mainMenu: Menu, game: Game) -> None:
+        super().__init__(mainMenu, game, "Mon Super Niveau")
+    
+    def load(self) -> None:
+        ...
+        self.player = Player(30, Percent(25), 50, 50, PLAYER_TEXTURE, self.colliders, self.game.getScreen())
+        self.phantom = PhantomPlayer(80, Percent(25), 50, 50, PHANTOM_TEXTURE, self.colliders, self.game.getScreen())
+        self.activePlayer = self.player
+
+        self.colliders += [self.player, self.phantom]
+        self.content += self.colliders
+        ...
+
+    ...
+
+export: dict[str,Any] = {
+    "class_name": MonNiveau.__qualname__
+}
+```
